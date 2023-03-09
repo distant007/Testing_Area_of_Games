@@ -1,0 +1,36 @@
+.card {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 3.125rem;
+  margin: 3.125rem;
+}
+.card-info {
+  min-width: 60%;
+}
+.card-title {
+  font-style: 2.1875rem;
+}
+.ant-collapse-header {
+  flex-direction: row-reverse;
+}
+.ant-collapse-header-text {
+  font-size: 0.9375rem;
+}
+.ant-collapse-expand-icon span {
+  transform: rotate(90deg);
+}
+.ant-collapse-item-active .ant-collapse-expand-icon span {
+  transform: rotate(180deg);
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8125rem;
+}
+.list-item {
+  display: flex;
+  justify-content: space-between;
+}
