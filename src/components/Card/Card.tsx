@@ -1,6 +1,7 @@
 import { Alert, Image, Spin } from "antd";
-import React, { useEffect, useState } from "react";
-import { fetchingData } from "../../services/fetch";
+import React from "react";
+import { useAppSelector } from "../../hooks";
+
 import CardInfo from "../CardInfo/CardInfo";
 
 import "./card.css";
@@ -16,33 +17,10 @@ export interface IData {
   name?: string;
 }
 const Card: React.FC = () => {
-  const [data, setData] = useState<IData | null>(null);
-  const [err, setErr] = useState<Error | null>(null);
-
-  useEffect(() => {
-    fetchingData()
-      .then((res) => setData(res))
-      .catch((err) => setErr(err));
-  }, []);
-  console.log(data);
-
-  const error = err ? (
-    <Alert
-      message="Error"
-      description="This is an error message about copywriting."
-      type="error"
-      showIcon
-    />
-  ) : null;
-  const loading =
-    !err && !data ? (
-      <Spin tip="Loading" size="large">
-        <div className="content" />
-      </Spin>
-    ) : null;
+  const { data, error, isLoading } = useAppSelector((state) => state.data);
   return (
     <>
-      {!error && !loading ? (
+      {!isLoading && !error ? (
         <div className="card">
           <div className="card-img">
             <Image
@@ -51,15 +29,22 @@ const Card: React.FC = () => {
               style={{ borderRadius: "5%" }}
             />
           </div>
-          <CardInfo
-            attributes={data?.attributes}
-            name={data?.name}
-            description={data?.description}
-          />
+          <CardInfo />
         </div>
       ) : null}
-      {error}
-      {loading}
+      {error ? (
+        <Alert
+          message="Error"
+          description="This is an error message about copywriting."
+          type="error"
+          showIcon
+        />
+      ) : null}
+      {isLoading ? (
+        <Spin tip="Loading" size="large">
+          <div className="content" />
+        </Spin>
+      ) : null}
     </>
   );
 };
