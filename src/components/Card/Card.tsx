@@ -26,18 +26,23 @@ const Card: React.FC = () => {
   }, []);
   console.log(data);
 
-  const error =
-    err !== null ? (
-      <Alert
-        message="Error"
-        description="This is an error message about copywriting."
-        type="error"
-        showIcon
-      />
+  const error = err ? (
+    <Alert
+      message="Error"
+      description="This is an error message about copywriting."
+      type="error"
+      showIcon
+    />
+  ) : null;
+  const loading =
+    !err && !data ? (
+      <Spin tip="Loading" size="large">
+        <div className="content" />
+      </Spin>
     ) : null;
   return (
     <>
-      {error === null ? (
+      {!error && !loading ? (
         <div className="card">
           <div className="card-img">
             <Image
@@ -52,12 +57,9 @@ const Card: React.FC = () => {
             description={data?.description}
           />
         </div>
-      ) : (
-        <Spin tip="Loading" size="large">
-          <div className="content" />
-        </Spin>
-      )}
+      ) : null}
       {error}
+      {loading}
     </>
   );
 };
